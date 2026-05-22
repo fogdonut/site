@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>muteberry | fogdonut</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      color: #ffffff;
+      font-family: 'Ubuntu', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      font-family: 'Ubuntu', sans-serif;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      background: #000000;
+      padding-bottom: 48px;
+    }
+
+    .page-header {
+      width: 100%;
+      max-width: 1500px;
+      margin: 0 auto 56px;
+      padding: 48px 24px 0;
+    }
+
+    .logo-link {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 56px;
+    }
+
+    .logo {
+      display: block;
+      width: 72px;
+      height: auto;
+    }
+
+    .meta {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .date,
+    .breadcrumb {
+      margin: 0;
+    }
+
+    .slider {
+      width: 100%;
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+    }
+
+    .main-row {
+      display: grid;
+      grid-template-columns: 56px minmax(0, 1fr) 56px;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .main-image {
+      width: 100%;
+      max-width: 1280px;
+      height: auto;
+      max-height: 720px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      cursor: zoom-in;
+    }
+
+    .arrow {
+      width: 56px;
+      height: 56px;
+      background: transparent;
+      color: #ffffff;
+      border: none;
+      font-size: 56px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      opacity: 0.85;
+    }
+
+    .arrow:hover {
+      opacity: 1;
+    }
+
+    .thumbnail-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 26px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 0 24px 8px;
+    }
+
+    .thumbnail-row::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .thumbnail-row::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .thumbnail-row::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .thumbnail {
+      width: 72px;
+      height: 48px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      opacity: 0.55;
+      display: block;
+      flex: 0 0 auto;
+    }
+
+    .thumbnail.active {
+      border: 2px solid #ffffff;
+      opacity: 1;
+    }
+
+    .copyright {
+      text-align: center;
+      font-size: 12px;
+      margin: 88px 0 0;
+      padding-bottom: 24px;
+      color: #ffffff;
+    }
+
+    .fullscreen-viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.98);
+    }
+
+    .fullscreen-viewer.active {
+      display: flex;
+    }
+
+    .fullscreen-image {
+      max-width: 94vw;
+      max-height: 94vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .fullscreen-close {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      z-index: 1000000;
+      background: transparent;
+      color: #ffffff;
+      border: none;
+      font-size: 48px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .fullscreen-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000000;
+      background: transparent;
+      color: #ffffff;
+      border: none;
+      font-size: 72px;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.85;
+    }
+
+    .fullscreen-arrow:hover {
+      opacity: 1;
+    }
+
+    .fullscreen-prev {
+      left: 36px;
+    }
+
+    .fullscreen-next {
+      right: 36px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .page-header {
+        padding-top: 32px;
+        margin-bottom: 36px;
+      }
+
+      .logo {
+        width: 56px;
+      }
+
+      .logo-link {
+        margin-bottom: 36px;
+      }
+
+      .meta {
+        font-size: 10px;
+      }
+
+      .main-row {
+        grid-template-columns: 36px minmax(0, 1fr) 36px;
+        gap: 8px;
+      }
+
+      .arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 40px;
+      }
+
+      .main-image {
+        max-height: 420px;
+      }
+
+      .thumbnail-row {
+        justify-content: flex-start;
+        gap: 6px;
+        margin-top: 18px;
+        padding: 0 16px 8px;
+      }
+
+      .thumbnail {
+        width: 56px;
+        height: 38px;
+      }
+
+      .copyright {
+        font-size: 10px;
+        margin-top: 56px;
+      }
+
+      .fullscreen-close {
+        top: 16px;
+        right: 20px;
+        font-size: 40px;
+      }
+
+      .fullscreen-arrow {
+        font-size: 48px;
+      }
+
+      .fullscreen-prev {
+        left: 16px;
+      }
+
+      .fullscreen-next {
+        right: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="page-header">
+      <a href="index.html" class="logo-link" aria-label="Home">
+        <img
+          class="logo"
+          src="https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-600x600_v-fs_webp_3bf983ba-1bce-4376-9a77-b4c4e7c99090.png"
+          alt="fogdonut"
+        >
+      </a>
+
+      <div class="meta">
+        <p class="date" id="currentDate"></p>
+        <p class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span>&gt;</span>
+          <a href="avatar.html">Avatar</a>
+          <span>&gt;</span>
+          <span>muteberry</span>
+        </p>
+      </div>
+    </header>
+
+    <section class="slider" aria-label="muteberry image gallery">
+      <div class="main-row">
+        <button class="arrow" id="prevBtn" aria-label="Previous">‹</button>
+
+        <img
+          id="mainImage"
+          class="main-image"
+          src="https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_603eff39-5457-4c67-8062-7cc3e828e155.jpg"
+          alt="muteberry image"
+        >
+
+        <button class="arrow" id="nextBtn" aria-label="Next">›</button>
+      </div>
+
+      <div class="thumbnail-row" id="thumbnailRow"></div>
+    </section>
+
+    <p class="copyright" id="copyright"></p>
+  </main>
+
+  <div class="fullscreen-viewer" id="fullscreenViewer">
+    <button class="fullscreen-close" id="closeFullscreen" aria-label="Close">×</button>
+    <button class="fullscreen-arrow fullscreen-prev" id="fullscreenPrev" aria-label="Previous">‹</button>
+
+    <img id="fullscreenImage" class="fullscreen-image" src="" alt="">
+
+    <button class="fullscreen-arrow fullscreen-next" id="fullscreenNext" aria-label="Next">›</button>
+  </div>
+
+  <script>
+    const images = [
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_603eff39-5457-4c67-8062-7cc3e828e155.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_7c3723c8-2414-464f-9f64-ee050f5cabbe.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_55fc9b8f-a939-4361-b7f3-1213cd8cccab.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_784dc5de-0f9c-48e0-8303-7e68aee087de.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_1db0d37f-bb3d-4ce3-8897-ce9ea6d1b09f.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_6d1528a3-6283-4cfe-b1ca-018235b70e94.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_acd65559-44ce-49b4-96f2-10cbfbb369d0.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_51e9202a-accb-46c8-be86-d05379e5c67d.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_e9a123fb-03a7-4518-8f0d-a57c7425e2be.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_b496cc70-f517-420f-9055-54c1fc8f99a7.jpg",
+      "https://storage.googleapis.com/studio-design-asset-files/projects/1pqDMl5laj/s-3840x2160_v-frms_webp_6b7b5a33-fa0d-4b38-8f8d-e7605f21bd62.jpg"
+    ];
+
+    let currentIndex = 0;
+
+    const mainImage = document.getElementById("mainImage");
+    const thumbnailRow = document.getElementById("thumbnailRow");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    const fullscreenViewer = document.getElementById("fullscreenViewer");
+    const fullscreenImage = document.getElementById("fullscreenImage");
+    const closeFullscreen = document.getElementById("closeFullscreen");
+    const fullscreenPrev = document.getElementById("fullscreenPrev");
+    const fullscreenNext = document.getElementById("fullscreenNext");
+
+    const date = new Date();
+    const monthNames = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    const month = monthNames[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    document.getElementById("currentDate").innerHTML =
+      month + " " + day + ", " + year;
+
+    document.getElementById("copyright").innerHTML =
+      "© " + year + " fogdonut";
+
+    images.forEach(function(src, index) {
+      const thumb = document.createElement("img");
+      thumb.className = "thumbnail";
+      thumb.src = src;
+      thumb.alt = "";
+      thumb.dataset.index = index;
+
+      if (index === 0) {
+        thumb.classList.add("active");
+      }
+
+      thumb.addEventListener("click", function() {
+        showSlide(index);
+      });
+
+      thumbnailRow.appendChild(thumb);
+    });
+
+    function getThumbnails() {
+      return document.querySelectorAll(".thumbnail");
+    }
+
+    function showSlide(index) {
+      currentIndex = index;
+      mainImage.src = images[currentIndex];
+      fullscreenImage.src = images[currentIndex];
+
+      const thumbnails = getThumbnails();
+
+      thumbnails.forEach(function(thumb, i) {
+        thumb.classList.toggle("active", i === currentIndex);
+      });
+
+      const activeThumb = thumbnails[currentIndex];
+      if (activeThumb) {
+        activeThumb.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest"
+        });
+      }
+    }
+
+    function nextSlide() {
+      showSlide((currentIndex + 1) % images.length);
+    }
+
+    function prevSlide() {
+      showSlide((currentIndex - 1 + images.length) % images.length);
+    }
+
+    function openFullscreen() {
+      fullscreenImage.src = images[currentIndex];
+      fullscreenViewer.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeFullscreenView() {
+      fullscreenViewer.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    nextBtn.addEventListener("click", nextSlide);
+    prevBtn.addEventListener("click", prevSlide);
+
+    fullscreenNext.addEventListener("click", nextSlide);
+    fullscreenPrev.addEventListener("click", prevSlide);
+
+    mainImage.addEventListener("click", openFullscreen);
+    closeFullscreen.addEventListener("click", closeFullscreenView);
+
+    fullscreenViewer.addEventListener("click", function(event) {
+      if (event.target === fullscreenViewer) {
+        closeFullscreenView();
+      }
+    });
+
+    document.addEventListener("keydown", function(event) {
+      const isFullscreenOpen = fullscreenViewer.classList.contains("active");
+
+      if (event.key === "ArrowRight") {
+        nextSlide();
+      }
+
+      if (event.key === "ArrowLeft") {
+        prevSlide();
+      }
+
+      if (isFullscreenOpen && event.key === "Escape") {
+        closeFullscreenView();
+      }
+    });
+  </script>
+</body>
+</html>
