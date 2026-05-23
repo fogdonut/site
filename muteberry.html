@@ -123,8 +123,10 @@
       opacity: 0.85;
     }
 
-    .arrow:hover {
+    .arrow:hover,
+    .arrow:focus-visible {
       opacity: 1;
+      outline: none;
     }
 
     .thumbnail-row {
@@ -151,20 +153,33 @@
       background: rgba(255, 255, 255, 0.35);
     }
 
-    .thumbnail {
+    .thumbnail-button {
       width: 72px;
       height: 48px;
-      object-fit: cover;
-      cursor: pointer;
+      padding: 0;
       border: 2px solid transparent;
+      background: transparent;
+      cursor: pointer;
       opacity: 0.55;
-      display: block;
       flex: 0 0 auto;
     }
 
-    .thumbnail.active {
-      border: 2px solid #ffffff;
+    .thumbnail-button.active {
+      border-color: #ffffff;
       opacity: 1;
+    }
+
+    .thumbnail-button:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 3px;
+      opacity: 1;
+    }
+
+    .thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .purchase-section {
@@ -189,7 +204,8 @@
       text-decoration: none;
     }
 
-    .purchase-link:hover {
+    .purchase-link:hover,
+    .purchase-link:focus-visible {
       text-decoration: underline;
     }
 
@@ -250,8 +266,12 @@
       opacity: 0.85;
     }
 
-    .fullscreen-arrow:hover {
+    .fullscreen-arrow:hover,
+    .fullscreen-arrow:focus-visible,
+    .fullscreen-close:hover,
+    .fullscreen-close:focus-visible {
       opacity: 1;
+      outline: none;
     }
 
     .fullscreen-prev {
@@ -338,7 +358,7 @@
         padding: 0 16px 8px;
       }
 
-      .thumbnail {
+      .thumbnail-button {
         width: 72px;
         height: 48px;
       }
@@ -408,19 +428,19 @@
 
     <section class="slider" aria-label="muteberry image gallery">
       <div class="main-row">
-        <button class="arrow" id="prevBtn" aria-label="Previous">‹</button>
+        <button class="arrow" id="prevBtn" type="button" aria-label="Previous image">‹</button>
 
         <img
           id="mainImage"
           class="main-image"
           src="images/muteberry_01.jpg"
-          alt="muteberry image"
+          alt="muteberry image 1"
         >
 
-        <button class="arrow" id="nextBtn" aria-label="Next">›</button>
+        <button class="arrow" id="nextBtn" type="button" aria-label="Next image">›</button>
       </div>
 
-      <div class="thumbnail-row" id="thumbnailRow"></div>
+      <div class="thumbnail-row" id="thumbnailRow" aria-label="Image thumbnails"></div>
     </section>
 
     <section class="purchase-section align-block" aria-label="Purchase">
@@ -438,13 +458,19 @@
     <p class="copyright" id="copyright"></p>
   </main>
 
-  <div class="fullscreen-viewer" id="fullscreenViewer">
-    <button class="fullscreen-close" id="closeFullscreen" aria-label="Close">×</button>
-    <button class="fullscreen-arrow fullscreen-prev" id="fullscreenPrev" aria-label="Previous">‹</button>
+  <div
+    class="fullscreen-viewer"
+    id="fullscreenViewer"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image fullscreen viewer"
+  >
+    <button class="fullscreen-close" id="closeFullscreen" type="button" aria-label="Close fullscreen viewer">×</button>
+    <button class="fullscreen-arrow fullscreen-prev" id="fullscreenPrev" type="button" aria-label="Previous image">‹</button>
 
     <img id="fullscreenImage" class="fullscreen-image" src="" alt="">
 
-    <button class="fullscreen-arrow fullscreen-next" id="fullscreenNext" aria-label="Next">›</button>
+    <button class="fullscreen-arrow fullscreen-next" id="fullscreenNext" type="button" aria-label="Next image">›</button>
   </div>
 
   <script>
@@ -475,58 +501,53 @@
     const fullscreenPrev = document.getElementById("fullscreenPrev");
     const fullscreenNext = document.getElementById("fullscreenNext");
 
-    const date = new Date();
+    const currentDate = document.getElementById("currentDate");
+    const copyright = document.getElementById("copyright");
+
     const monthNames = [
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
 
-    const month = monthNames[date.getMonth()];
-    const day = date.getDate();
-    const year = date.getFullYear();
+    function setMetaText() {
+      const date = new Date();
+      const month = monthNames[date.getMonth()];
+      const day = date.getDate();
+      const year = date.getFullYear();
 
-    document.getElementById("currentDate").innerHTML =
-      month + " " + day + ", " + year;
-
-    document.getElementById("copyright").innerHTML =
-      "© " + year + " fogdonut";
-
-    images.forEach(function(src, index) {
-      const thumb = document.createElement("img");
-      thumb.className = "thumbnail";
-      thumb.src = src;
-      thumb.alt = "";
-      thumb.dataset.index = index;
-
-      if (index === 0) {
-        thumb.classList.add("active");
-      }
-
-      thumb.addEventListener("click", function() {
-        showSlide(index);
-      });
-
-      thumbnailRow.appendChild(thumb);
-    });
-
-    function getThumbnails() {
-      return document.querySelectorAll(".thumbnail");
+      currentDate.textContent = `${month} ${day}, ${year}`;
+      copyright.textContent = `© ${year} fogdonut`;
     }
 
-    function showSlide(index) {
-      currentIndex = index;
-      mainImage.src = images[currentIndex];
-      fullscreenImage.src = images[currentIndex];
+    function getThumbnailButtons() {
+      return thumbnailRow.querySelectorAll(".thumbnail-button");
+    }
 
-      const thumbnails = getThumbnails();
+    function updateImages() {
+      const src = images[currentIndex];
+      const altText = `muteberry image ${currentIndex + 1}`;
 
-      thumbnails.forEach(function(thumb, i) {
-        thumb.classList.toggle("active", i === currentIndex);
+      mainImage.src = src;
+      mainImage.alt = altText;
+
+      fullscreenImage.src = src;
+      fullscreenImage.alt = altText;
+    }
+
+    function updateThumbnails() {
+      const thumbnails = getThumbnailButtons();
+
+      thumbnails.forEach(function(thumbnail, index) {
+        const isActive = index === currentIndex;
+
+        thumbnail.classList.toggle("active", isActive);
+        thumbnail.setAttribute("aria-current", isActive ? "true" : "false");
       });
 
-      const activeThumb = thumbnails[currentIndex];
-      if (activeThumb) {
-        activeThumb.scrollIntoView({
+      const activeThumbnail = thumbnails[currentIndex];
+
+      if (activeThumbnail) {
+        activeThumbnail.scrollIntoView({
           behavior: "smooth",
           inline: "center",
           block: "nearest"
@@ -534,30 +555,72 @@
       }
     }
 
+    function showSlide(index) {
+      currentIndex = (index + images.length) % images.length;
+
+      updateImages();
+      updateThumbnails();
+    }
+
     function nextSlide() {
-      showSlide((currentIndex + 1) % images.length);
+      showSlide(currentIndex + 1);
     }
 
     function prevSlide() {
-      showSlide((currentIndex - 1 + images.length) % images.length);
+      showSlide(currentIndex - 1);
     }
 
     function openFullscreen() {
-      fullscreenImage.src = images[currentIndex];
+      updateImages();
       fullscreenViewer.classList.add("active");
       document.body.style.overflow = "hidden";
+      closeFullscreen.focus();
     }
 
     function closeFullscreenView() {
       fullscreenViewer.classList.remove("active");
       document.body.style.overflow = "";
+      mainImage.focus?.();
     }
 
-    nextBtn.addEventListener("click", nextSlide);
-    prevBtn.addEventListener("click", prevSlide);
+    function isFullscreenOpen() {
+      return fullscreenViewer.classList.contains("active");
+    }
 
-    fullscreenNext.addEventListener("click", nextSlide);
+    function createThumbnails() {
+      images.forEach(function(src, index) {
+        const button = document.createElement("button");
+        button.className = "thumbnail-button";
+        button.type = "button";
+        button.setAttribute("aria-label", `Show image ${index + 1}`);
+
+        if (index === currentIndex) {
+          button.classList.add("active");
+          button.setAttribute("aria-current", "true");
+        } else {
+          button.setAttribute("aria-current", "false");
+        }
+
+        const image = document.createElement("img");
+        image.className = "thumbnail";
+        image.src = src;
+        image.alt = "";
+
+        button.appendChild(image);
+
+        button.addEventListener("click", function() {
+          showSlide(index);
+        });
+
+        thumbnailRow.appendChild(button);
+      });
+    }
+
+    prevBtn.addEventListener("click", prevSlide);
+    nextBtn.addEventListener("click", nextSlide);
+
     fullscreenPrev.addEventListener("click", prevSlide);
+    fullscreenNext.addEventListener("click", nextSlide);
 
     mainImage.addEventListener("click", openFullscreen);
     closeFullscreen.addEventListener("click", closeFullscreenView);
@@ -569,20 +632,24 @@
     });
 
     document.addEventListener("keydown", function(event) {
-      const isFullscreenOpen = fullscreenViewer.classList.contains("active");
-
       if (event.key === "ArrowRight") {
         nextSlide();
+        return;
       }
 
       if (event.key === "ArrowLeft") {
         prevSlide();
+        return;
       }
 
-      if (isFullscreenOpen && event.key === "Escape") {
+      if (isFullscreenOpen() && event.key === "Escape") {
         closeFullscreenView();
       }
     });
+
+    setMetaText();
+    createThumbnails();
+    showSlide(0);
   </script>
 </body>
 </html>
