@@ -53,14 +53,14 @@
     .page-header {
       width: 100%;
       max-width: 1500px;
-      margin: 0 auto 48px;
-      padding: 48px 24px 0;
+      margin: 0 auto 40px;
+      padding: 48px 0 0;
     }
 
     .logo-link {
       display: block;
       width: fit-content;
-      margin: 0 auto 56px;
+      margin: 0 auto 48px;
     }
 
     .logo {
@@ -91,7 +91,7 @@
       width: 100%;
       max-width: 1500px;
       margin: 0 auto;
-      padding: 0 24px 24px;
+      padding: 0 24px 20px;
     }
 
     .main-row {
@@ -105,7 +105,7 @@
       width: 100%;
       max-width: 1280px;
       height: auto;
-      max-height: 58vh;
+      max-height: 52vh;
       object-fit: contain;
       display: block;
       margin: 0 auto;
@@ -134,7 +134,7 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
-      margin-top: 22px;
+      margin-top: 20px;
       flex-wrap: nowrap;
       overflow-x: auto;
       overflow-y: hidden;
@@ -170,11 +170,11 @@
     }
 
     .purchase-section {
-      margin-top: 26px;
+      margin-top: 22px;
     }
 
     .purchase-label {
-      margin: 0 0 18px;
+      margin: 0 0 14px;
       font-size: 12px;
       line-height: 1.8;
       font-weight: 400;
@@ -198,7 +198,7 @@
     .copyright {
       text-align: center;
       font-size: 12px;
-      margin: 72px 0 0;
+      margin: 56px 0 0;
       padding-bottom: 44px;
       color: #ffffff;
       font-weight: 400;
@@ -264,73 +264,40 @@
       right: 36px;
     }
 
-    @media screen and (min-width: 1200px) and (min-height: 720px) {
-      html,
-      body {
-        height: 100%;
-        overflow: hidden;
-      }
-
-      .page {
-        height: 100vh;
-        min-height: 100vh;
-        overflow: hidden;
-        padding-bottom: 0;
-      }
-
+    @media screen and (max-height: 820px) and (min-width: 769px) {
       .page-header {
-        margin-bottom: 40px;
+        margin-bottom: 28px;
+        padding-top: 36px;
       }
 
       .logo-link {
-        margin-bottom: 48px;
+        margin-bottom: 36px;
+      }
+
+      .logo {
+        width: 64px;
       }
 
       .main-image {
-        max-height: 56vh;
+        max-height: 48vh;
+      }
+
+      .thumbnail-row {
+        margin-top: 16px;
       }
 
       .purchase-section {
-        margin-top: 22px;
-      }
-
-      .purchase-label {
-        margin-bottom: 14px;
+        margin-top: 18px;
       }
 
       .copyright {
-        margin-top: 56px;
-        padding-bottom: 0;
-      }
-    }
-
-    @media screen and (min-width: 1200px) and (max-height: 719px) {
-      html,
-      body {
-        overflow-y: auto;
-      }
-
-      .page {
-        min-height: 100vh;
-        height: auto;
-        overflow: visible;
-      }
-
-      .main-image {
-        max-height: 560px;
+        margin-top: 40px;
+        padding-bottom: 32px;
       }
     }
 
     @media screen and (max-width: 768px) {
-      html,
-      body {
-        overflow-y: auto;
-      }
-
       .page {
-        min-height: 100vh;
-        height: auto;
-        overflow: visible;
         padding-bottom: 32px;
       }
 
@@ -353,6 +320,10 @@
 
       .meta {
         font-size: 10px;
+      }
+
+      .slider {
+        padding: 0 24px 20px;
       }
 
       .main-row {
@@ -378,12 +349,12 @@
       }
 
       .thumbnail {
-        width: 56px;
-        height: 38px;
+        width: 72px;
+        height: 48px;
       }
 
       .purchase-section {
-        margin-top: 24px;
+        margin-top: 28px;
       }
 
       .purchase-label {
@@ -392,7 +363,7 @@
       }
 
       .purchase-link {
-        font-size: 16px;
+        font-size: 18px;
       }
 
       .copyright {
