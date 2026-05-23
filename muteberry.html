@@ -14,17 +14,17 @@
     body {
       margin: 0;
       padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background: #000000;
       color: #ffffff;
       font-family: 'Ubuntu', sans-serif;
+      overscroll-behavior: none;
     }
 
     * {
       box-sizing: border-box;
-    }
-
-    body {
-      min-height: 100vh;
     }
 
     a {
@@ -42,15 +42,17 @@
 
     .page {
       width: 100%;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
       background: #000000;
-      padding-bottom: 48px;
+      padding-bottom: 32px;
+      position: relative;
     }
 
     .page-header {
       width: 100%;
       max-width: 1500px;
-      margin: 0 auto 56px;
+      margin: 0 auto 48px;
       padding: 48px 24px 0;
     }
 
@@ -84,7 +86,7 @@
       width: 100%;
       max-width: 1500px;
       margin: 0 auto;
-      padding: 0 24px 32px;
+      padding: 0 24px 24px;
     }
 
     .main-row {
@@ -98,7 +100,7 @@
       width: 100%;
       max-width: 1280px;
       height: auto;
-      max-height: 720px;
+      max-height: 58vh;
       object-fit: contain;
       display: block;
       margin: 0 auto;
@@ -127,9 +129,10 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
-      margin-top: 26px;
+      margin-top: 22px;
       flex-wrap: nowrap;
       overflow-x: auto;
+      overflow-y: hidden;
       padding: 0 24px 8px;
     }
 
@@ -161,11 +164,43 @@
       opacity: 1;
     }
 
+    .purchase-section {
+      width: 100%;
+      max-width: 1280px;
+      margin: 26px auto 0;
+      padding: 0;
+    }
+
+    .purchase-label {
+      margin: 0 0 18px;
+      font-size: 12px;
+      line-height: 1.8;
+      font-weight: 400;
+      color: #ffffff;
+    }
+
+    .purchase-link {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .purchase-link:hover {
+      text-decoration: underline;
+    }
+
     .copyright {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 44px;
       text-align: center;
       font-size: 12px;
-      margin: 88px 0 0;
-      padding-bottom: 24px;
+      margin: 0;
       color: #ffffff;
       font-weight: 400;
     }
@@ -260,7 +295,7 @@
       }
 
       .main-image {
-        max-height: 420px;
+        max-height: 42vh;
       }
 
       .thumbnail-row {
@@ -275,9 +310,23 @@
         height: 38px;
       }
 
-      .copyright {
+      .purchase-section {
+        margin-top: 24px;
+        padding: 0 24px;
+      }
+
+      .purchase-label {
         font-size: 10px;
-        margin-top: 56px;
+        margin-bottom: 14px;
+      }
+
+      .purchase-link {
+        font-size: 16px;
+      }
+
+      .copyright {
+        bottom: 36px;
+        font-size: 10px;
       }
 
       .fullscreen-close {
@@ -339,6 +388,18 @@
       </div>
 
       <div class="thumbnail-row" id="thumbnailRow"></div>
+    </section>
+
+    <section class="purchase-section" aria-label="Purchase">
+      <p class="purchase-label">Available on BOOTH</p>
+      <a
+        class="purchase-link"
+        href="https://r3isen.booth.pm/items/5979296"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Purchase
+      </a>
     </section>
 
     <p class="copyright" id="copyright"></p>
@@ -456,7 +517,7 @@
 
     function closeFullscreenView() {
       fullscreenViewer.classList.remove("active");
-      document.body.style.overflow = "";
+      document.body.style.overflow = "hidden";
     }
 
     nextBtn.addEventListener("click", nextSlide);
