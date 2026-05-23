@@ -50,8 +50,10 @@
       padding-bottom: 44px;
     }
 
-    .logo-area {
+    .page-header {
       width: 100%;
+      max-width: 1500px;
+      margin: 0 auto 48px;
       padding: 48px 24px 0;
     }
 
@@ -67,19 +69,14 @@
       height: auto;
     }
 
-    .content-frame {
-      width: 100%;
+    .align-block {
+      width: calc(100% - 48px);
       max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    .page-header {
-      margin-bottom: 48px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .meta {
-      width: 100%;
       font-size: 12px;
       line-height: 1.8;
       font-weight: 400;
@@ -281,12 +278,12 @@
         padding-bottom: 0;
       }
 
-      .logo-link {
-        margin-bottom: 48px;
-      }
-
       .page-header {
         margin-bottom: 40px;
+      }
+
+      .logo-link {
+        margin-bottom: 48px;
       }
 
       .main-image {
@@ -337,8 +334,9 @@
         padding-bottom: 32px;
       }
 
-      .logo-area {
+      .page-header {
         padding-top: 32px;
+        margin-bottom: 36px;
       }
 
       .logo {
@@ -349,12 +347,8 @@
         margin-bottom: 36px;
       }
 
-      .content-frame {
-        padding: 0 24px;
-      }
-
-      .page-header {
-        margin-bottom: 36px;
+      .align-block {
+        width: calc(100% - 48px);
       }
 
       .meta {
@@ -430,7 +424,7 @@
 
 <body>
   <main class="page">
-    <div class="logo-area">
+    <header class="page-header">
       <a href="index.html" class="logo-link" aria-label="Home">
         <img
           class="logo"
@@ -438,10 +432,8 @@
           alt="fogdonut"
         >
       </a>
-    </div>
 
-    <header class="page-header content-frame">
-      <div class="meta">
+      <div class="meta align-block">
         <p class="date" id="currentDate"></p>
         <p class="breadcrumb">
           <a href="index.html">Home</a>
@@ -470,7 +462,7 @@
       <div class="thumbnail-row" id="thumbnailRow"></div>
     </section>
 
-    <section class="purchase-section content-frame" aria-label="Purchase">
+    <section class="purchase-section align-block" aria-label="Purchase">
       <p class="purchase-label">Available on BOOTH</p>
       <a
         class="purchase-link"
