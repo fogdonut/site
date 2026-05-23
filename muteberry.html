@@ -50,10 +50,8 @@
       padding-bottom: 44px;
     }
 
-    .page-header {
+    .logo-area {
       width: 100%;
-      max-width: 1500px;
-      margin: 0 auto 48px;
       padding: 48px 24px 0;
     }
 
@@ -69,10 +67,19 @@
       height: auto;
     }
 
-    .meta {
+    .content-frame {
       width: 100%;
       max-width: 1280px;
       margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+    }
+
+    .meta {
+      width: 100%;
       font-size: 12px;
       line-height: 1.8;
       font-weight: 400;
@@ -166,10 +173,7 @@
     }
 
     .purchase-section {
-      width: 100%;
-      max-width: 1280px;
-      margin: 26px auto 0;
-      padding: 0 24px;
+      margin-top: 26px;
     }
 
     .purchase-label {
@@ -277,12 +281,12 @@
         padding-bottom: 0;
       }
 
-      .page-header {
-        margin-bottom: 40px;
-      }
-
       .logo-link {
         margin-bottom: 48px;
+      }
+
+      .page-header {
+        margin-bottom: 40px;
       }
 
       .main-image {
@@ -333,9 +337,8 @@
         padding-bottom: 32px;
       }
 
-      .page-header {
+      .logo-area {
         padding-top: 32px;
-        margin-bottom: 36px;
       }
 
       .logo {
@@ -343,6 +346,14 @@
       }
 
       .logo-link {
+        margin-bottom: 36px;
+      }
+
+      .content-frame {
+        padding: 0 24px;
+      }
+
+      .page-header {
         margin-bottom: 36px;
       }
 
@@ -379,7 +390,6 @@
 
       .purchase-section {
         margin-top: 24px;
-        padding: 0 24px;
       }
 
       .purchase-label {
@@ -420,7 +430,7 @@
 
 <body>
   <main class="page">
-    <header class="page-header">
+    <div class="logo-area">
       <a href="index.html" class="logo-link" aria-label="Home">
         <img
           class="logo"
@@ -428,7 +438,9 @@
           alt="fogdonut"
         >
       </a>
+    </div>
 
+    <header class="page-header content-frame">
       <div class="meta">
         <p class="date" id="currentDate"></p>
         <p class="breadcrumb">
@@ -458,7 +470,7 @@
       <div class="thumbnail-row" id="thumbnailRow"></div>
     </section>
 
-    <section class="purchase-section" aria-label="Purchase">
+    <section class="purchase-section content-frame" aria-label="Purchase">
       <p class="purchase-label">Available on BOOTH</p>
       <a
         class="purchase-link"
