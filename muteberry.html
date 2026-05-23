@@ -88,31 +88,28 @@
     }
 
     .slider {
-      width: 100%;
-      max-width: 1500px;
-      margin: 0 auto;
-      padding: 0 24px 20px;
+      margin-top: 0;
+      padding-bottom: 20px;
     }
 
     .main-row {
-      display: grid;
-      grid-template-columns: 56px minmax(0, 1fr) 56px;
-      align-items: center;
-      gap: 18px;
+      position: relative;
+      width: 100%;
     }
 
     .main-image {
       width: 100%;
-      max-width: 1280px;
       height: auto;
       max-height: 52vh;
       object-fit: contain;
       display: block;
-      margin: 0 auto;
       cursor: zoom-in;
     }
 
     .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
       width: 56px;
       height: 56px;
       background: transparent;
@@ -123,10 +120,19 @@
       cursor: pointer;
       padding: 0;
       opacity: 0.85;
+      z-index: 2;
     }
 
     .arrow:hover {
       opacity: 1;
+    }
+
+    #prevBtn {
+      left: -96px;
+    }
+
+    #nextBtn {
+      right: -96px;
     }
 
     .thumbnail-row {
@@ -138,7 +144,7 @@
       flex-wrap: nowrap;
       overflow-x: auto;
       overflow-y: hidden;
-      padding: 0 24px 8px;
+      padding: 0 0 8px;
     }
 
     .thumbnail-row::-webkit-scrollbar {
@@ -322,13 +328,8 @@
         font-size: 10px;
       }
 
-      .slider {
-        padding: 0 24px 20px;
-      }
-
-      .main-row {
-        grid-template-columns: 36px minmax(0, 1fr) 36px;
-        gap: 8px;
+      .main-image {
+        max-height: none;
       }
 
       .arrow {
@@ -337,15 +338,19 @@
         font-size: 40px;
       }
 
-      .main-image {
-        max-height: none;
+      #prevBtn {
+        left: -44px;
+      }
+
+      #nextBtn {
+        right: -44px;
       }
 
       .thumbnail-row {
         justify-content: flex-start;
         gap: 6px;
         margin-top: 18px;
-        padding: 0 16px 8px;
+        padding: 0 0 8px;
       }
 
       .thumbnail {
@@ -416,7 +421,7 @@
       </div>
     </header>
 
-    <section class="slider" aria-label="muteberry image gallery">
+    <section class="slider align-block" aria-label="muteberry image gallery">
       <div class="main-row">
         <button class="arrow" id="prevBtn" aria-label="Previous">‹</button>
 
